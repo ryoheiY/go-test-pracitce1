@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"io"
@@ -92,4 +93,13 @@ func Test_checkNumbers(t *testing.T) {
 		assert.Equal(t, val.result, resBool)
 	}
 
+}
+
+func Test_readUserInput(t *testing.T) {
+	done := make(chan bool)
+	var stdin bytes.Buffer
+	stdin.Write([]byte("1\nq\n"))
+	go readUserInput(&stdin, done)
+	<-done
+	close(done)
 }
